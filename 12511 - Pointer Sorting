@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int** s(int* ptr,int len){
+    int **a;
+    int b = (int)sqrt(len);
+
+    a = (int**)malloc(b*sizeof(int*)+b*b*sizeof(int));
+    int* c = (int*)(a+b);
+    for(int i=0;i<b;i++){
+        a[i] = &c[i*b];
+    }
+  
+    **a=*ptr;
+    for(int i=1;i<len;i++){
+            int flag=0;
+            for(int j=0;j<i;j++){
+                if(*(*a+j)>ptr[i]){
+                    for(int k=i ;k>=j ;k--){
+                       *(*a+k) = *(*a+k-1);
+                    }
+                    *(*a+j) = ptr[i];
+                    flag = 1;
+                    break;
+                }
+            }
+            if(flag==0){
+                *(*a+i) = ptr[i];
+            }
+        }
+return a;
+}
