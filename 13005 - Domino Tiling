@@ -1,0 +1,48 @@
+#include<stdio.h>
+int a[3][20];
+int count=0;
+void fun(int n,int x,int y,int puz){
+    if(puz==3*(n/2)){
+        count++;
+        return;
+    }
+
+    if(a[x][y]==0 && a[x+1][y]==0 && x+1<3){
+        a[x][y]=1; a[x+1][y]=1;
+        int row,col;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<3;j++){
+                if(a[j][i]==0){
+                row = j;
+                col = i;
+                i=n,j=3;
+                }
+            }
+        }
+        fun(n,row,col,puz+1);
+        a[x][y]=0; a[x+1][y]=0;
+    }
+
+    if(a[x][y]==0 && a[x][y+1]==0 && y+1<n){
+        a[x][y]=1; a[x][y+1]=1;
+        int row,col;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<3;j++){
+                if(a[j][i]==0){
+                row = j;
+                col = i;
+                i=n,j=3;
+                }
+            }
+        }
+        fun(n,row,col,puz+1);
+        a[x][y]=0; a[x][y+1]=0;
+    }
+}
+int main(){
+    int n;
+    scanf("%d",&n);
+    fun(n,0,0,0);
+    printf("%d",count);
+return 0;
+}
